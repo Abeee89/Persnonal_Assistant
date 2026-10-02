@@ -1,0 +1,2045 @@
+You are a **Senior Full-Stack Web Developer, Software Architect, Database Engineer, Product Designer, and UI/UX Designer** with extensive experience building productivity and personal management applications.
+
+I want to build a web application called **Personal Activity**.
+
+Your task is to create a comprehensive **Software Design Document (SDD)** that can be used as the technical blueprint for developing this application.
+
+Do **not** write the application source code yet.
+
+The goal is to produce a practical, technically sound, scalable, maintainable, privacy-focused SDD that can later be used by developers or AI coding agents to implement the application step by step.
+
+---
+
+# 1. Product Overview
+
+**Personal Activity** is a personal productivity and life-logging web application.
+
+The application should allow a user to:
+
+* Track daily activities
+* Write daily journals
+* Manage tasks and todos
+* Create and track personal goals
+* Track habits
+* Record progress
+* Store photos and attachments
+* Review previous activities
+* View activities through a calendar and timeline
+* Analyze personal productivity
+* Perform daily, weekly, and monthly reflections
+* Search historical personal data
+* Export and restore personal data
+
+The application should function as a **private personal activity management system**, not as a social network.
+
+The main principles are:
+
+1. Privacy
+2. Data ownership
+3. Local-first architecture
+4. Simplicity
+5. Good UX
+6. Performance
+7. Maintainability
+8. Extensibility
+9. Easy backup and restore
+
+---
+
+# 2. Primary Objective
+
+Design a system that can eventually become a **Personal Activity OS**.
+
+The system should act as a central place for:
+
+```text
+Activities
+Journal
+Tasks
+Goals
+Habits
+Calendar
+Statistics
+Reflection
+Attachments
+Personal Insights
+```
+
+The application should remain useful even without cloud services or AI.
+
+AI should be considered an optional enhancement rather than a core dependency.
+
+---
+
+# 3. Core Technology Preference
+
+The preferred technology stack is:
+
+### Frontend / Fullstack Framework
+
+* Next.js
+* React
+* TypeScript
+
+Use the latest stable versions where practical.
+
+### Styling
+
+Evaluate:
+
+* Tailwind CSS
+* shadcn/ui
+* Lucide Icons
+
+### Backend
+
+Prefer the built-in Next.js architecture:
+
+* Server Components
+* Server Actions
+* Route Handlers
+* Service Layer
+
+Do not introduce a separate backend server unless there is a strong technical reason.
+
+---
+
+# 4. Database Architecture
+
+The application should primarily support a **local/private database**.
+
+Evaluate:
+
+### Option A
+
+```text
+SQLite
++
+Drizzle ORM
+```
+
+### Option B
+
+```text
+SQLite
++
+Prisma
+```
+
+### Option C
+
+```text
+PostgreSQL
++
+Drizzle
+```
+
+### Option D
+
+```text
+PGlite
+```
+
+### Option E
+
+```text
+IndexedDB
+```
+
+Compare the options based on:
+
+* Local development
+* Data ownership
+* Performance
+* Backup
+* Migration
+* Scalability
+* Developer experience
+* Offline support
+* Future cloud migration
+
+Provide a final recommendation.
+
+For the MVP, prioritize simplicity and local/private operation.
+
+---
+
+# 5. File Storage
+
+The application must support storing:
+
+* Photos
+* Images
+* PDFs
+* Other personal attachments
+
+Evaluate:
+
+```text
+Local filesystem
+Database BLOB
+IndexedDB
+Object storage
+```
+
+For the first version, prioritize local storage.
+
+Do not store large files directly inside the database unless there is a strong architectural reason.
+
+Design an abstraction so storage can later be changed from:
+
+```text
+LocalStorageProvider
+```
+
+to:
+
+```text
+S3StorageProvider
+CloudStorageProvider
+```
+
+without changing the business logic.
+
+---
+
+# 6. System Architecture
+
+Design a modular monolithic architecture.
+
+Preferred conceptual structure:
+
+```text
+┌──────────────────────────┐
+│       Presentation       │
+│ Next.js / React / UI     │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│    Application Layer     │
+│ Server Actions / APIs    │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│      Service Layer       │
+│ Business Logic           │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│   Repository / Data      │
+│ Drizzle / ORM            │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│       SQLite DB          │
+└──────────────────────────┘
+```
+
+Keep the architecture simple.
+
+Do NOT introduce:
+
+* Microservices
+* Kubernetes
+* Message brokers
+* Complex distributed systems
+
+unless a clear future requirement justifies them.
+
+---
+
+# 7. Dashboard
+
+The dashboard is the primary landing page.
+
+It should provide a quick overview of the user's current state.
+
+Display:
+
+* Current date
+* Greeting
+* Today's activities
+* Tasks
+* Completed tasks
+* Goals progress
+* Habit progress
+* Recent journal
+* Productivity summary
+* Quick actions
+* Timeline
+
+Example:
+
+```text
+Good Evening
+
+Today
+────────────────────────────
+
+Activities       8
+Tasks            5 / 7
+Habits           4 / 5
+Goals            72%
+
+[ + Add Activity ]
+
+Today's Timeline
+
+08:00  Morning Exercise
+10:00  Work
+13:00  Lunch
+15:00  Coding
+19:00  Study
+
+Daily Reflection
+
+"What did you accomplish today?"
+```
+
+The dashboard should not become visually overloaded.
+
+Prioritize information that is useful at a glance.
+
+---
+
+# 8. Activity Management
+
+Create a complete activity tracking system.
+
+Suggested activity model:
+
+```text
+Activity
+- id
+- title
+- description
+- categoryId
+- date
+- startTime
+- endTime
+- duration
+- status
+- priority
+- tags
+- location
+- mood
+- energyLevel
+- createdAt
+- updatedAt
+```
+
+Support:
+
+* Create
+* Read
+* Update
+* Delete
+* Duplicate
+* Search
+* Filter
+* Sort
+* Tagging
+* Timeline
+* Calendar
+* Attachments
+
+Default categories may include:
+
+```text
+Work
+Study
+Personal
+Health
+Exercise
+Project
+Other
+```
+
+Users should be able to create custom categories.
+
+---
+
+# 9. Daily Journal
+
+Create a dedicated journaling system.
+
+Suggested journal structure:
+
+```text
+Date
+
+Mood
+Energy Level
+
+What happened today?
+
+What did I accomplish?
+
+What went well?
+
+What did not go well?
+
+What did I learn?
+
+What should I improve tomorrow?
+
+Gratitude
+
+Notes
+
+Attachments
+```
+
+Evaluate rich text editors such as:
+
+* TipTap
+* Lexical
+* Markdown editor
+
+Select the most appropriate option.
+
+Journal requirements:
+
+* Autosave
+* Draft state
+* Editing
+* Search
+* Date filtering
+* Attachments
+* Export
+* Mobile-friendly writing experience
+
+---
+
+# 10. Goal Management
+
+Create a goal management system.
+
+Example:
+
+```text
+Goal
+
+Learn Next.js
+
+Category:
+Learning
+
+Start:
+October 1, 2026
+
+Deadline:
+December 31, 2026
+
+Progress:
+65%
+```
+
+Goals should support:
+
+* Description
+* Category
+* Priority
+* Deadline
+* Status
+* Progress
+* Milestones
+* Notes
+* Related activities
+* Related tasks
+
+Statuses:
+
+```text
+Not Started
+In Progress
+Completed
+Archived
+```
+
+---
+
+# 11. Milestones
+
+Goals should contain milestones.
+
+Example:
+
+```text
+Learn Next.js
+
+[x] Learn App Router
+[x] Learn Server Actions
+[x] Learn Database Integration
+[ ] Build Project
+[ ] Deploy Project
+```
+
+Progress should optionally be calculated automatically from completed milestones.
+
+Explain the calculation strategy in the SDD.
+
+---
+
+# 12. Habit Tracker
+
+Create a habit tracking system.
+
+Example:
+
+```text
+Read Book
+● ● ○ ● ● ● ○
+
+Exercise
+● ● ● ● ○ ● ●
+
+Coding
+● ● ● ● ● ● ○
+```
+
+Support:
+
+* Daily habits
+* Weekly habits
+* Monthly habits
+* Streaks
+* Completion rate
+* Calendar heatmap
+* Habit history
+
+Avoid making the habit system unnecessarily complex in the MVP.
+
+---
+
+# 13. Task Management
+
+Create a lightweight task management system.
+
+Suggested structure:
+
+```text
+Task
+- id
+- title
+- description
+- status
+- priority
+- dueDate
+- categoryId
+- tags
+- goalId
+- activityId
+- createdAt
+- completedAt
+```
+
+Statuses:
+
+```text
+Todo
+In Progress
+Done
+Cancelled
+```
+
+Keep the task system simple.
+
+This is a personal productivity application, not a Jira replacement.
+
+---
+
+# 14. Calendar
+
+Create a calendar interface.
+
+Support:
+
+```text
+Month
+Week
+Day
+```
+
+Calendar should display:
+
+* Activities
+* Tasks
+* Goal deadlines
+* Habits
+* Journal entries
+
+Provide filtering by entity type.
+
+Ensure the calendar is usable on mobile devices.
+
+---
+
+# 15. Timeline
+
+Create a visual timeline.
+
+Example:
+
+```text
+08:00
+ │
+ ├── Morning Exercise
+ │
+10:00
+ │
+ ├── Work
+ │
+13:00
+ │
+ ├── Lunch
+ │
+15:00
+ │
+ ├── Coding
+ │
+19:00
+ │
+ └── Study
+```
+
+The timeline should be one of the primary ways users understand their day.
+
+---
+
+# 16. Statistics
+
+Create a statistics section.
+
+## Daily
+
+Display:
+
+* Activity count
+* Productive time
+* Completed tasks
+* Journal entries
+* Habit completion
+
+## Weekly
+
+Display:
+
+* Activity distribution
+* Productive hours
+* Task completion rate
+* Habit consistency
+* Mood trend
+
+## Monthly
+
+Display:
+
+* Productivity trends
+* Activity categories
+* Goal progress
+* Habit consistency
+* Journal frequency
+
+Evaluate chart libraries:
+
+* Recharts
+* Chart.js
+* Other appropriate alternatives
+
+Select one and explain why.
+
+---
+
+# 17. Global Search
+
+Implement global search.
+
+Search across:
+
+```text
+Activities
+Journal
+Tasks
+Goals
+Habits
+Tags
+Attachments
+```
+
+Example:
+
+```text
+Search: "Next.js"
+
+Results
+
+Journal
+"Today I learned Next.js..."
+
+Activity
+"Build Next.js dashboard"
+
+Goal
+"Learn Next.js"
+```
+
+Evaluate full-text search capabilities of the selected database.
+
+---
+
+# 18. Attachments
+
+Users should be able to attach files to:
+
+```text
+Activities
+Journal
+Goals
+Tasks
+```
+
+Suggested attachment model:
+
+```text
+Attachment
+- id
+- filename
+- originalName
+- mimeType
+- size
+- storagePath
+- entityType
+- entityId
+- createdAt
+```
+
+Support at least:
+
+```text
+JPG
+PNG
+WEBP
+PDF
+```
+
+Implement:
+
+* File type validation
+* MIME validation
+* File size validation
+* Secure file naming
+* Path traversal protection
+* Preview where appropriate
+
+---
+
+# 19. Data Ownership
+
+The user must have full ownership of their personal data.
+
+Implement:
+
+## Export
+
+```text
+Export All Data
+```
+
+Support:
+
+```text
+JSON
+CSV
+ZIP
+```
+
+Recommended backup structure:
+
+```text
+personal-activity-2026-10-02.zip
+
+├── data.json
+├── metadata.json
+├── schema-version.json
+└── attachments/
+    ├── image-001.jpg
+    ├── image-002.png
+    └── document.pdf
+```
+
+## Import
+
+Support restoration from backup.
+
+The import system must include:
+
+* Validation
+* Schema version checking
+* Migration
+* Duplicate handling
+* Error reporting
+* Transaction safety
+
+---
+
+# 20. Privacy
+
+Privacy is a core requirement.
+
+Design the system so that personal data does not need to leave the user's device.
+
+Explain:
+
+* Where data is stored
+* How data is protected
+* How attachments are protected
+* Authentication
+* Authorization
+* Session management
+* Backup security
+* Network exposure
+
+The application should work without third-party services for core functionality.
+
+---
+
+# 21. Authentication
+
+Evaluate whether authentication is necessary for local-only usage.
+
+Compare:
+
+* Auth.js
+* Better Auth
+* Custom session
+* Local-only access
+
+If authentication is implemented, design:
+
+```text
+User
+Session
+Account
+```
+
+Explain the recommended approach.
+
+---
+
+# 22. UI/UX Direction
+
+The design should be:
+
+* Modern
+* Minimal
+* Clean
+* Professional
+* Calm
+* Productivity-oriented
+* Easy to use every day
+
+Avoid:
+
+* Excessive gradients
+* Excessive animations
+* Overloaded dashboards
+* Too many colors
+* Enterprise-style UI
+
+The visual language should feel closer to a combination of:
+
+```text
+Personal journal
++
+Productivity dashboard
++
+Calendar
++
+Knowledge management tool
+```
+
+---
+
+# 23. Desktop Navigation
+
+Recommended layout:
+
+```text
+Personal Activity
+
+Dashboard
+Today
+Calendar
+Activities
+Journal
+Tasks
+Goals
+Habits
+Statistics
+
+────────────────
+
+Search
+
+────────────────
+
+Settings
+Backup
+```
+
+Use a collapsible sidebar.
+
+---
+
+# 24. Mobile Navigation
+
+Mobile navigation should prioritize:
+
+```text
+Home
+Today
+Calendar
+Tasks
+More
+```
+
+Use:
+
+* Bottom navigation
+* Floating action button
+* Responsive cards
+* Bottom sheets
+* Mobile-friendly forms
+
+The most common actions should require minimal interaction.
+
+---
+
+# 25. Design System
+
+Define a complete design system.
+
+## Typography
+
+Evaluate:
+
+* Inter
+* Geist
+* Plus Jakarta Sans
+
+Choose one.
+
+## Colors
+
+Use a neutral foundation:
+
+```text
+Background
+Surface
+Primary
+Secondary
+Success
+Warning
+Danger
+Muted
+Border
+```
+
+Avoid excessive color usage.
+
+## Components
+
+Define:
+
+```text
+Button
+Input
+Textarea
+Select
+Dialog
+Drawer
+Card
+Badge
+Tabs
+Dropdown
+Tooltip
+Toast
+Calendar
+Timeline
+Progress
+Chart
+Command Menu
+Date Picker
+File Upload
+```
+
+Use shadcn/ui where appropriate.
+
+---
+
+# 26. Dark Mode
+
+Support:
+
+```text
+Light
+Dark
+System
+```
+
+Ensure:
+
+* Proper contrast
+* Accessible colors
+* Readable charts
+* Proper focus states
+* Comfortable journal writing
+* No excessive brightness
+
+---
+
+# 27. Keyboard Shortcuts
+
+Consider:
+
+```text
+Ctrl/Cmd + K
+Global Search
+
+Ctrl/Cmd + N
+Create Activity
+
+Ctrl/Cmd + J
+Open Journal
+
+Ctrl/Cmd + T
+Create Task
+```
+
+Document all shortcuts.
+
+Allow users to disable or modify shortcuts if appropriate.
+
+---
+
+# 28. Quick Add
+
+Implement a fast creation experience.
+
+For example:
+
+```text
++ Add
+
+Activity
+Journal
+Task
+Goal
+Habit
+```
+
+The user should be able to create an activity quickly without navigating through multiple pages.
+
+---
+
+# 29. State Management
+
+Evaluate:
+
+* React Context
+* Zustand
+* TanStack Query
+* URL state
+* Server state
+
+Do not introduce global state unnecessarily.
+
+Explain exactly which state belongs to:
+
+```text
+Server
+URL
+Local component
+Global client state
+```
+
+---
+
+# 30. Validation
+
+Evaluate:
+
+```text
+Zod
+Valibot
+```
+
+Validation must happen on both:
+
+```text
+Client
++
+Server
+```
+
+Never rely only on frontend validation.
+
+---
+
+# 31. Performance
+
+Design for:
+
+* Fast initial load
+* Server Components where appropriate
+* Minimal Client Components
+* Image optimization
+* Lazy loading
+* Pagination
+* Efficient queries
+* Database indexing
+* Caching where appropriate
+
+Identify potential performance bottlenecks.
+
+---
+
+# 32. PWA
+
+Evaluate Progressive Web App support.
+
+Consider:
+
+* Installable application
+* Offline functionality
+* Service worker
+* Local storage
+* IndexedDB
+* Background sync
+* Notifications
+
+Determine whether PWA should be:
+
+```text
+Phase 1
+or
+Phase 2
+```
+
+Explain the reasoning.
+
+---
+
+# 33. Offline-First Architecture
+
+Evaluate whether the application should use an offline-first architecture.
+
+Potential architecture:
+
+```text
+UI
+ ↓
+Local Data Layer
+ ↓
+IndexedDB / SQLite
+ ↓
+Sync Layer
+ ↓
+Optional Server
+```
+
+If this introduces unnecessary complexity for the MVP, propose a simpler alternative.
+
+The final architecture should balance:
+
+```text
+Offline capability
++
+Development complexity
++
+Data reliability
+```
+
+---
+
+# 34. AI Integration
+
+AI should be optional.
+
+Potential features:
+
+### Daily Summary
+
+Example:
+
+```text
+Today you completed 7 activities.
+Your main focus was coding and learning.
+```
+
+### Weekly Review
+
+AI can summarize:
+
+* Activities
+* Goals
+* Habits
+* Journal entries
+
+### Journal Assistant
+
+AI can help:
+
+* Summarize journal entries
+* Generate reflection questions
+* Identify recurring themes
+
+### Goal Assistant
+
+AI can:
+
+* Break goals into milestones
+* Suggest tasks
+* Generate action plans
+
+However:
+
+> The application must work completely without AI.
+
+Use an abstraction such as:
+
+```text
+AIService
+
+├── OpenAIProvider
+├── GeminiProvider
+├── OllamaProvider
+└── LocalModelProvider
+```
+
+Pay special attention to privacy before sending journal data to external AI providers.
+
+---
+
+# 35. Notifications
+
+Evaluate notification functionality.
+
+Potential reminders:
+
+```text
+Review today's journal
+Complete today's habit
+Review overdue task
+Check goal progress
+```
+
+Evaluate:
+
+* Browser notifications
+* PWA notifications
+* Local notifications
+
+Do not over-engineer notifications for the MVP.
+
+---
+
+# 36. Accessibility
+
+Follow accessibility best practices.
+
+Requirements:
+
+* Semantic HTML
+* Keyboard navigation
+* Screen reader support
+* Proper labels
+* Focus states
+* Color contrast
+* Reduced motion
+* Accessible dialogs
+* Accessible forms
+
+---
+
+# 37. Security
+
+Create a complete security checklist.
+
+Consider:
+
+```text
+XSS
+CSRF
+SQL Injection
+Path Traversal
+File Upload Security
+MIME Validation
+File Size Limits
+Authentication
+Authorization
+Session Security
+Secret Management
+Environment Variables
+```
+
+Never expose internal stack traces to users.
+
+---
+
+# 38. Database Design
+
+Create a complete database design.
+
+Potential entities:
+
+```text
+User
+Activity
+Journal
+Task
+Goal
+Milestone
+Habit
+HabitLog
+Category
+Tag
+Attachment
+DailySummary
+```
+
+Do not create unnecessary tables.
+
+For every entity explain:
+
+* Primary key
+* Foreign keys
+* Relationships
+* Indexes
+* Unique constraints
+* Nullable fields
+* Cascading behavior
+
+Provide:
+
+1. ERD
+2. Database schema
+3. Relationship explanation
+4. Indexing strategy
+
+Use Mermaid for the ERD.
+
+---
+
+# 39. API Architecture
+
+Design REST endpoints where appropriate.
+
+Example:
+
+```text
+GET    /api/activities
+POST   /api/activities
+GET    /api/activities/:id
+PATCH  /api/activities/:id
+DELETE /api/activities/:id
+```
+
+Do the same for:
+
+```text
+journal
+tasks
+goals
+habits
+attachments
+statistics
+backup
+```
+
+However, evaluate whether certain operations are better implemented using **Next.js Server Actions**.
+
+Clearly explain when to use:
+
+```text
+Server Actions
+vs
+Route Handlers / REST API
+```
+
+---
+
+# 40. Folder Structure
+
+Design a scalable Next.js project structure.
+
+Evaluate:
+
+```text
+src/
+├── app/
+├── components/
+├── features/
+├── services/
+├── repositories/
+├── db/
+├── schemas/
+├── hooks/
+├── types/
+├── utils/
+├── config/
+└── lib/
+```
+
+Provide the final recommended structure.
+
+Explain the purpose of each directory.
+
+---
+
+# 41. Environment Configuration
+
+Define:
+
+```text
+.env
+.env.local
+.env.example
+```
+
+Potential variables:
+
+```text
+DATABASE_URL=
+AUTH_SECRET=
+AI_API_KEY=
+STORAGE_PATH=
+```
+
+Never commit secrets to Git.
+
+---
+
+# 42. Development Environment
+
+Recommend:
+
+```text
+Node.js
+pnpm / npm
+Git
+VS Code
+SQLite
+Docker (optional)
+```
+
+Specify the recommended Node.js version based on the selected Next.js version.
+
+---
+
+# 43. Deployment
+
+The primary deployment target is local/private.
+
+Evaluate:
+
+## Local
+
+```text
+localhost
+```
+
+## Self-hosted
+
+```text
+Docker
+VPS
+NAS
+Home Server
+```
+
+## Cloud
+
+If needed:
+
+```text
+Vercel
+Cloudflare
+Railway
+Render
+```
+
+Explain the privacy implications of each deployment method.
+
+---
+
+# 44. Testing Strategy
+
+Define:
+
+## Unit Testing
+
+Examples:
+
+```text
+calculateDuration()
+calculateGoalProgress()
+calculateHabitStreak()
+calculateProductivityScore()
+```
+
+Potential tool:
+
+```text
+Vitest
+```
+
+## Integration Testing
+
+Test:
+
+```text
+Create Activity
+Create Journal
+Upload Attachment
+Create Goal
+Complete Task
+Update Habit
+Generate Statistics
+Export Data
+Import Data
+```
+
+## E2E Testing
+
+Use:
+
+```text
+Playwright
+```
+
+Example flow:
+
+```text
+Open Dashboard
+↓
+Create Activity
+↓
+Create Journal
+↓
+Upload Photo
+↓
+Create Goal
+↓
+Create Task
+↓
+Complete Task
+↓
+Check Statistics
+```
+
+---
+
+# 45. Error Handling
+
+Define:
+
+### UI states
+
+```text
+Loading
+Skeleton
+Empty
+Error
+Success
+Offline
+```
+
+### Backend errors
+
+```text
+Validation Error
+Database Error
+File Error
+Authentication Error
+Authorization Error
+Unexpected Error
+```
+
+Use consistent error responses.
+
+---
+
+# 46. Logging
+
+Define an appropriate logging strategy.
+
+Development:
+
+```text
+Detailed logs
+```
+
+Production:
+
+```text
+Structured logs
+Error logs
+Security-related logs
+```
+
+Do not log sensitive journal content unnecessarily.
+
+---
+
+# 47. User Flows
+
+Create diagrams for:
+
+## First-time user
+
+```text
+Open Application
+↓
+Initial Setup
+↓
+Dashboard
+↓
+Create First Activity
+↓
+Create First Goal
+```
+
+## Daily usage
+
+```text
+Dashboard
+↓
+Review Tasks
+↓
+Add Activity
+↓
+Complete Tasks
+↓
+Write Journal
+↓
+Daily Reflection
+```
+
+## Weekly review
+
+```text
+Statistics
+↓
+Review Activities
+↓
+Review Goals
+↓
+Review Habits
+↓
+Write Weekly Reflection
+```
+
+---
+
+# 48. Application Pages
+
+Design the following pages:
+
+```text
+/
+ /dashboard
+ /today
+ /activities
+ /activities/[id]
+ /journal
+ /journal/[id]
+ /tasks
+ /goals
+ /goals/[id]
+ /habits
+ /calendar
+ /statistics
+ /search
+ /settings
+ /settings/backup
+ /settings/preferences
+```
+
+For every page explain:
+
+* Purpose
+* Layout
+* Components
+* Data required
+* User actions
+* Empty state
+* Loading state
+* Error state
+* Responsive behavior
+
+---
+
+# 49. MVP Definition
+
+Do not attempt to build everything at once.
+
+## Phase 1 — MVP
+
+Recommended:
+
+```text
+Dashboard
+Activity
+Journal
+Tasks
+Goals
+Calendar
+SQLite
+Attachments
+Search
+Dark Mode
+Backup / Restore
+```
+
+## Phase 2
+
+```text
+Habit Tracker
+Statistics
+PWA
+Offline support
+Notifications
+```
+
+## Phase 3
+
+```text
+AI Assistant
+Advanced Analytics
+Advanced Search
+Automation
+Personal Insights
+```
+
+Explain if the proposed phases should be changed.
+
+---
+
+# 50. Technical Decision Matrix
+
+Create a table:
+
+| Area          | Option                             | Recommendation | Reason |
+| ------------- | ---------------------------------- | -------------- | ------ |
+| Framework     | Next.js                            | ?              | ?      |
+| Database      | SQLite / PostgreSQL / PGlite       | ?              | ?      |
+| ORM           | Drizzle / Prisma                   | ?              | ?      |
+| UI            | Tailwind / shadcn/ui               | ?              | ?      |
+| Validation    | Zod / Valibot                      | ?              | ?      |
+| State         | Zustand / Context / None           | ?              | ?      |
+| Data Fetching | TanStack Query / Server Actions    | ?              | ?      |
+| Editor        | TipTap / Lexical / Markdown        | ?              | ?      |
+| Charts        | Recharts / Chart.js                | ?              | ?      |
+| Testing       | Vitest / Jest                      | ?              | ?      |
+| E2E           | Playwright                         | ?              | ?      |
+| PWA           | Evaluate                           | ?              | ?      |
+| Storage       | Filesystem / BLOB / Object Storage | ?              | ?      |
+
+Do not simply select technologies because they are popular.
+
+Evaluate their suitability for this specific project.
+
+---
+
+# 51. Architecture Constraints
+
+The architecture should prioritize:
+
+```text
+Simple
++
+Private
++
+Local-first
++
+Maintainable
++
+Modular
++
+Scalable
+```
+
+Avoid unnecessary infrastructure.
+
+For the initial version, prefer:
+
+```text
+Next.js
++
+TypeScript
++
+Tailwind CSS
++
+shadcn/ui
++
+Drizzle
++
+SQLite
++
+Zod
+```
+
+However, this is only a starting hypothesis.
+
+You must evaluate the stack before making the final recommendation.
+
+---
+
+# 52. Technical Risks
+
+Identify potential risks such as:
+
+* Database corruption
+* Data loss
+* Attachment storage growth
+* Backup failure
+* Offline synchronization conflicts
+* Browser storage limitations
+* Authentication complexity
+* AI privacy concerns
+* Performance with large datasets
+* Migration problems
+* File upload vulnerabilities
+
+For each risk provide:
+
+```text
+Risk
+Impact
+Probability
+Mitigation
+```
+
+---
+
+# 53. Acceptance Criteria
+
+Create acceptance criteria for every major feature.
+
+Example:
+
+### Activity
+
+```text
+Given the user is on the Activity page
+
+When the user creates an activity
+
+Then the activity should be stored in the database
+
+And it should appear on the dashboard
+
+And it should appear in the calendar
+
+And it should be searchable.
+```
+
+Create similar criteria for:
+
+* Journal
+* Task
+* Goal
+* Habit
+* Calendar
+* Attachment
+* Search
+* Backup
+* Restore
+* Statistics
+
+---
+
+# 54. Recommended Development Order
+
+Provide the recommended implementation sequence.
+
+Start from infrastructure and gradually build features.
+
+For example:
+
+```text
+1. Project Setup
+2. Database Setup
+3. Database Schema
+4. Core Architecture
+5. Design System
+6. Activity System
+7. Journal
+8. Task Management
+9. Goal Management
+10. Calendar
+11. Attachments
+12. Dashboard
+13. Search
+14. Statistics
+15. Backup / Restore
+16. Testing
+17. PWA
+18. Notifications
+19. AI Integration
+```
+
+Modify this sequence if dependencies require a different order.
+
+---
+
+# 55. What NOT to Build Initially
+
+Explicitly identify features that should NOT be included in the MVP.
+
+Examples:
+
+```text
+Social networking
+Multi-user collaboration
+Real-time multiplayer functionality
+Microservices
+Complex automation engine
+Advanced AI agent
+Complex permission system
+Enterprise analytics
+```
+
+Explain why each should be postponed.
+
+---
+
+# 56. Final SDD Structure
+
+The final SDD must contain the following sections:
+
+```text
+1. Executive Summary
+2. Product Vision
+3. Goals and Objectives
+4. Scope
+5. Assumptions
+6. Functional Requirements
+7. Non-Functional Requirements
+8. User Personas
+9. User Stories
+10. User Flows
+11. Feature Specification
+12. UI/UX Specification
+13. Design System
+14. Information Architecture
+15. System Architecture
+16. Technology Stack
+17. Technical Decision Matrix
+18. Database Architecture
+19. ERD
+20. Database Schema
+21. API Architecture
+22. Server Actions
+23. File Storage Architecture
+24. Authentication
+25. Authorization
+26. Security
+27. Validation
+28. State Management
+29. Performance
+30. Offline Strategy
+31. PWA Strategy
+32. Backup and Restore
+33. Search Architecture
+34. Statistics Architecture
+35. AI Integration
+36. Notification System
+37. Error Handling
+38. Logging
+39. Testing Strategy
+40. Folder Structure
+41. Development Environment
+42. Deployment Strategy
+43. Technical Risks
+44. MVP Roadmap
+45. Future Roadmap
+46. Acceptance Criteria
+47. Development Order
+48. Final Architecture Recommendation
+```
+
+---
+
+# 57. Final Recommendation Section
+
+At the end of the SDD, provide a concise final recommendation containing:
+
+## Recommended Stack
+
+Provide the final technology stack.
+
+## Recommended Architecture
+
+Provide the final architecture diagram.
+
+## Recommended Database
+
+Explain the database choice.
+
+## Recommended Storage
+
+Explain attachment storage.
+
+## Recommended MVP
+
+List only the features that should be implemented first.
+
+## Features to Postpone
+
+List features that should be postponed.
+
+## Development Roadmap
+
+Provide the implementation order.
+
+---
+
+# 58. Important Instructions
+
+Before producing the final SDD:
+
+1. Analyze the product requirements.
+2. Identify ambiguities.
+3. State reasonable assumptions.
+4. Evaluate technology choices.
+5. Compare architectural alternatives.
+6. Select the recommended architecture.
+7. Identify technical risks.
+8. Define the MVP boundary.
+9. Produce the final SDD.
+
+Do not write application source code.
+
+Do not create unnecessary complexity.
+
+Do not assume cloud infrastructure is required.
+
+The application must remain functional without AI or external services.
+
+Use **Mermaid diagrams** for:
+
+* System architecture
+* ERD
+* User flows
+* Data flows
+
+Use tables where comparisons are useful.
+
+The final document should be technically detailed enough that another developer or AI coding agent can use it as the implementation blueprint without having to redesign the architecture from scratch.
+
+The ultimate product vision is:
+
+> **A private, local-first Personal Activity OS that combines activity tracking, journaling, tasks, goals, habits, calendar, statistics, personal reflection, and optional AI-powered insights into one clean and intuitive application.**
