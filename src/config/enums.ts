@@ -1,0 +1,11 @@
+export const PRIORITIES = ["low", "medium", "high", "urgent"] as const;
+export const ACTIVITY_STATUSES = ["planned", "in_progress", "done", "cancelled"] as const;
+export const TASK_STATUSES = ["todo", "in_progress", "done", "cancelled"] as const;
+export const GOAL_STATUSES = ["not_started", "in_progress", "completed", "archived"] as const;
+export const PROGRESS_MODES = ["auto", "manual"] as const;
+export const JOURNAL_TYPES = ["daily", "weekly", "monthly"] as const;
+export const JOURNAL_STATUSES = ["draft", "final"] as const;
+export const HABIT_FREQUENCIES = ["daily", "weekly", "monthly"] as const;
+export const ATTACHMENT_ENTITY_TYPES = ["activity", "journal", "task", "goal"] as const;
+export const ATTACHMENT_KINDS = ["image", "pdf", "other"] as const;
+export const ATTACHMENT_STATUSES = ["pending", "ready", "orphan"] as const;
