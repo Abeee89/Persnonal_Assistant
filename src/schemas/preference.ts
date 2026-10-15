@@ -1,16 +1,18 @@
 import { z } from "zod";
-import { THEME_MODES } from "@/lib/theme";
 import { line } from "./common";
 
 /**
- * Whitelisted preference keys (SDD §06 §3). Unknown keys are rejected
- * so arbitrary data cannot be written into the preferences table.
+ * Whitelisted preference keys (SDD §06 §3). Unknown keys are rejected so arbitrary
+ * data cannot be written into the preferences table.
+ *
+ * Theme is deliberately not stored here: the browser already persists it (see
+ * lib/theme.ts), so keeping a second copy would create two sources of truth.
  */
 export const preferenceValueSchemas = {
   displayName: line(60, "Display name"),
-  theme: z.enum(THEME_MODES),
   weekStart: z.union([z.literal(0), z.literal(1)]),
   density: z.enum(["comfortable", "compact"]),
+  shortcutsEnabled: z.boolean(),
   attachmentMaxBytes: z.number().int().min(1024).max(50 * 1024 * 1024),
 } as const;
 

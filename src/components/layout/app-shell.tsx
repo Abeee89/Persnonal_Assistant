@@ -7,6 +7,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { MOBILE_NAV, PRIMARY_NAV, UTILITY_NAV, isActivePath, type NavItem } from "@/config/nav";
 import { ThemeToggle } from "./theme-toggle";
+import { CommandPalette } from "@/features/search/components/command-palette";
+import { ShortcutHelp } from "./shortcut-help";
 
 const SIDEBAR_KEY = "pa-sidebar-collapsed";
 
@@ -154,7 +156,7 @@ function MobileItem({ item, active }: { item: NavItem; active: boolean }) {
   );
 }
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({ children, density = "comfortable" }: { children: ReactNode; density?: "comfortable" | "compact" }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -173,7 +175,9 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-dvh">
       <Sidebar collapsed={collapsed} onToggle={toggle} pathname={pathname} />
-      <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
+      <CommandPalette />
+      <ShortcutHelp />
+      <div className={cn("flex min-w-0 flex-1 flex-col pb-20 md:pb-0", density === "compact" && "text-[13px] leading-snug [&_.space-y-8]:space-y-5 [&_.py-8]:py-5 [&_.gap-6]:gap-4")} data-density={density}>
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>

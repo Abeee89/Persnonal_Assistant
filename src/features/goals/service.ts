@@ -195,7 +195,7 @@ export function listGoals(db: DbExec, includeArchived: boolean): GoalSummary[] {
         ? isNull(goals.deletedAt)
         : and(isNull(goals.deletedAt), sql`${goals.status} != 'archived'`),
     )
-    .orderBy(asc(goals.deadline), asc(goals.title))
+    .orderBy(sql`${goals.deadline} IS NULL`, asc(goals.deadline), asc(goals.title))
     .all();
   return rows.map((row) => {
     const ms = milestoneRows(db, row.id);

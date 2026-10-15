@@ -171,6 +171,16 @@ describe("updateGoal", () => {
   });
 });
 
+describe("listGoals ordering", () => {
+  it("lists dated goals first by deadline, then undated goals by title", () => {
+    createGoal(db, goal({ title: "Undated B", deadline: null }), ctx);
+    createGoal(db, goal({ title: "Undated A", deadline: null }), ctx);
+    createGoal(db, goal({ title: "Later", deadline: "2026-12-31" }), ctx);
+    createGoal(db, goal({ title: "Sooner", deadline: "2026-11-30" }), ctx);
+    expect(listGoals(db, false).map((g) => g.title)).toEqual(["Sooner", "Later", "Undated A", "Undated B"]);
+  });
+});
+
 describe("linked work and deletion", () => {
   it("lists tasks and activities linked to the goal", () => {
     const g = createGoal(db, goal(), ctx);

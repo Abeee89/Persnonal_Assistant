@@ -153,14 +153,16 @@ describe("journalUpsertSchema", () => {
 
 describe("preferences whitelist", () => {
   it("resolves only known keys", () => {
-    expect(preferenceSchemaFor("theme")).not.toBeNull();
+    expect(preferenceSchemaFor("density")).not.toBeNull();
+    expect(preferenceSchemaFor("theme")).toBeNull();
     expect(preferenceSchemaFor("__proto__")).toBeNull();
     expect(preferenceSchemaFor("admin")).toBeNull();
   });
 
   it("validates values per key", () => {
-    expect(preferenceSetSchema.safeParse({ key: "theme", value: "dark" }).success).toBe(true);
-    expect(preferenceSetSchema.safeParse({ key: "theme", value: "neon" }).success).toBe(false);
+    expect(preferenceSetSchema.safeParse({ key: "density", value: "compact" }).success).toBe(true);
+    expect(preferenceSetSchema.safeParse({ key: "density", value: "huge" }).success).toBe(false);
+    expect(preferenceSetSchema.safeParse({ key: "shortcutsEnabled", value: false }).success).toBe(true);
     expect(preferenceSetSchema.safeParse({ key: "hacker", value: 1 }).success).toBe(false);
   });
 });

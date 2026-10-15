@@ -134,6 +134,16 @@ describe("uploadAttachment validation", () => {
     expect(listForEntity(db, "activity", "act-1")).toHaveLength(1);
   });
 
+  it("enforces a user-chosen cap that is lower than the server limit", async () => {
+    await expect(
+      uploadAttachment(
+        db,
+        { entityType: "activity", entityId: null, originalName: "a.pdf", bytes: PDF },
+        ctx({ maxBytes: PDF.byteLength - 1 }),
+      ),
+    ).rejects.toMatchObject({ code: "FILE_TOO_LARGE" });
+  });
+
   it("reports a storage failure as STORAGE without writing a row", async () => {
     const failing = new MemoryStorage();
     failing.put = () => Promise.reject(new Error("disk full"));

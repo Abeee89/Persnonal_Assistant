@@ -61,7 +61,7 @@ describe("database bootstrap", () => {
 
   it("creates every MVP table from the migration", () => {
     const rows = handle.sqlite
-      .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '__drizzle%'")
+      .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '__drizzle%' AND name NOT LIKE 'search_fts%'")
       .all() as { name: string }[];
     const names = rows.map((row) => row.name).sort();
     expect(names).toEqual(

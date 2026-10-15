@@ -1,6 +1,8 @@
 import path from "node:path";
+import type { Db } from "@/db/client";
 import { parseEnv } from "@/config/env";
 import { getDb } from "@/db/runtime";
+import { getPreferences } from "@/features/preferences/service";
 import { uuidv7 } from "@/lib/ids";
 import { LocalFsStorage } from "@/lib/storage/local-fs";
 import { MemoryStorage } from "@/lib/storage/memory";
@@ -19,16 +21,18 @@ export function getStorage(): StorageProvider {
   return storage;
 }
 
-export function attachmentMaxBytes(): number {
-  return parseEnv(process.env).ATTACHMENT_MAX_BYTES;
+export function attachmentMaxBytes(db: Db = getDb()): number {
+  const env = parseEnv(process.env);
+  return getPreferences(db, env.ATTACHMENT_MAX_BYTES).attachmentMaxBytes;
 }
 
 export function attachmentContext() {
+  const db = getDb();
   return {
-    db: getDb(),
+    db,
     storage: getStorage(),
     now: () => new Date().toISOString(),
     newId: () => uuidv7(),
-    maxBytes: attachmentMaxBytes(),
+    maxBytes: attachmentMaxBytes(db),
   };
 }

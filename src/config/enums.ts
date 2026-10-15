@@ -9,3 +9,7 @@ export const HABIT_FREQUENCIES = ["daily", "weekly", "monthly"] as const;
 export const ATTACHMENT_ENTITY_TYPES = ["activity", "journal", "task", "goal"] as const;
 export const ATTACHMENT_KINDS = ["image", "pdf", "other"] as const;
 export const ATTACHMENT_STATUSES = ["pending", "ready", "orphan"] as const;
+export const EVENT_KINDS = ["activity", "task", "goal", "habit", "journal"] as const;
+export type EventKind = (typeof EVENT_KINDS)[number];
+export const CALENDAR_VIEWS = ["month", "week", "day"] as const;
+export type CalendarView = (typeof CALENDAR_VIEWS)[number];

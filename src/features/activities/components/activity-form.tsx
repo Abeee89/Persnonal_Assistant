@@ -16,6 +16,7 @@ export interface ActivityFormProps {
   categories: CategoryOption[];
   initial?: ActivityView;
   defaultDate: string;
+  defaultStart?: string | null;
   onDone?: (id: string) => void;
 }
 
@@ -60,12 +61,13 @@ function nullableNumber(value: FormDataEntryValue | null): number | null {
   return text === null ? null : Number(text);
 }
 
-export function ActivityForm({ categories, initial, defaultDate, onDone }: ActivityFormProps) {
+export function ActivityForm({ categories, initial, defaultDate, defaultStart = null, onDone }: ActivityFormProps) {
   const router = useRouter();
   const [errors, setErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const [allDay, setAllDay] = useState(initial?.allDay ?? false);
+  const startDefault = initial?.startTime ?? defaultStart ?? "";
 
   function onSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -171,7 +173,7 @@ export function ActivityForm({ categories, initial, defaultDate, onDone }: Activ
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block text-sm">
               Start
-              <input type="time" name="startTime" defaultValue={initial?.startTime ?? ""} className={inputClass} />
+              <input type="time" name="startTime" defaultValue={startDefault} className={inputClass} />
               {fieldError("startTime")}
             </label>
             <label className="block text-sm">
