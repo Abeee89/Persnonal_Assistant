@@ -7,6 +7,7 @@ export const metadata = { title: "Settings" };
 export const dynamic = "force-dynamic";
 
 const SECTIONS = [
+  { href: "/settings/backup", title: "Backup", text: "Export a full copy, or restore one." },
   { href: "/settings/preferences", title: "Preferences", text: "Name, week start, density and attachment size." },
   { href: "/settings/shortcuts", title: "Keyboard shortcuts", text: "Turn shortcuts on or off and see the list." },
   { href: "/settings/data", title: "Your data", text: "Where your data lives and how much space it uses." },

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DashboardView } from "@/features/dashboard/components/dashboard-view";
 import { loadDashboard } from "@/features/dashboard/queries";
+import { loadPreferences } from "@/features/preferences/queries";
 import { addDays, isIsoDay, localIsoDay } from "@/lib/domain/dates";
 
 export const metadata = { title: "Today" };
@@ -34,7 +35,7 @@ export default async function TodayPage({ searchParams }: { searchParams: Search
           Next day →
         </Link>
       </nav>
-      <DashboardView snapshot={snapshot} name={null} hour={hour} />
+      <DashboardView snapshot={snapshot} name={loadPreferences().displayName} hour={hour} />
     </div>
   );
 }

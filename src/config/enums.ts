@@ -13,3 +13,5 @@ export const EVENT_KINDS = ["activity", "task", "goal", "habit", "journal"] as c
 export type EventKind = (typeof EVENT_KINDS)[number];
 export const CALENDAR_VIEWS = ["month", "week", "day"] as const;
 export type CalendarView = (typeof CALENDAR_VIEWS)[number];
+export const STATS_PERIODS = ["day", "week", "month"] as const;
+export type StatsPeriod = (typeof STATS_PERIODS)[number];
