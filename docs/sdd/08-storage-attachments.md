@@ -1,5 +1,7 @@
 # Chunk 08 — File Storage Architecture & Attachments (spec §5, §18)
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Storage option evaluation
 
 | Criterion | Local filesystem | SQLite BLOB | IndexedDB | Object storage (S3) |

@@ -1,5 +1,7 @@
 # Chunk 07 — API Architecture & Server Actions
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Server Actions vs Route Handlers — decision rule (spec §39)
 
 | Use | For | Why |

@@ -1,7 +1,10 @@
 # Personal Activity — Software Design Document
 
 **Version:** 1.0 · **Status:** Approved blueprint · **Date:** 2026-10-02
-**Document set:** `docs/sdd/01…15` (this file is chunk 01). Assembled master: `docs/sdd/SDD.md`.
+**Document set:** `docs/sdd/01…16` (this file is chunk 01). Assembled master: `docs/sdd/SDD.md`.
+
+> **As built:** implementation status and every deviation from this design are recorded in
+> [16-implementation-notes.md](16-implementation-notes.md). Read that alongside this blueprint.
 
 ---
 

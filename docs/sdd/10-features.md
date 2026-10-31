@@ -1,5 +1,7 @@
 # Chunk 10 — Feature Specification, Pages & Acceptance Criteria
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 Per feature: purpose → layout/components → data → actions → states → responsive → acceptance criteria (Given/When/Then, spec §53). Page-level template items from spec §48 all covered.
 
 ---

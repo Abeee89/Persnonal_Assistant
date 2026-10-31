@@ -1,5 +1,7 @@
 # Chunk 05 — System Architecture, Technology Stack, Decision Matrix
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Architecture constraints (spec §51)
 
 Driving constraints, in priority order:

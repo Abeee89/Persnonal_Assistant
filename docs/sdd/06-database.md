@@ -1,5 +1,7 @@
 # Chunk 06 — Database Architecture & Schema
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Database option evaluation (spec §4)
 
 | Criterion (weight) | A · SQLite + Drizzle | B · SQLite + Prisma | C · PostgreSQL + Drizzle | D · PGlite | E · IndexedDB |

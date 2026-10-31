@@ -1,5 +1,7 @@
 # Chunk 11 — Backup/Restore, Search Architecture, Statistics Architecture
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Global search (spec §17)
 
 ### 1.1 Database capability

@@ -1,5 +1,7 @@
 # Chunk 12 — PWA, Offline Strategy, AI Integration, Notifications, Logging
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. PWA strategy (spec §32)
 
 **Decision: Phase 2, with the shell prepared in Phase 1.**

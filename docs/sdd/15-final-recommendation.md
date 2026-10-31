@@ -1,5 +1,7 @@
 # Chunk 15 — Final SDD Index & Final Recommendation (spec §56–57)
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. SDD structure map (spec §56 — all 48 sections, located)
 
 | # | Section | Chunk | # | Section | Chunk |
@@ -28,6 +30,9 @@
 | 22 | Server Actions | 07 §3–4 | 46 | Acceptance Criteria | 10 (per feature), 11 §3.4, 08 |
 | 23 | File Storage Architecture | 08 | 47 | Development Order | 14 §3 |
 | 24 | Authentication | 09 §1 | 48 | Final Architecture Recommendation | this chunk |
+
+> **As built:** implementation status and every deviation from this design are recorded in
+> [16-implementation-notes.md](16-implementation-notes.md).
 
 ## 2. Recommended stack (final)
 

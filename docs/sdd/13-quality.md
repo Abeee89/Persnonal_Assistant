@@ -1,5 +1,7 @@
 # Chunk 13 — Testing, Error Handling, Environment, Development Environment
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. Testing strategy (spec §44)
 
 ### 1.1 Layers

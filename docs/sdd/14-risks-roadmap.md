@@ -1,5 +1,7 @@
 # Chunk 14 — MVP Roadmap, Development Order, Risks, What NOT to Build
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. MVP definition (spec §49, adjusted)
 
 Phase assignment vs the spec's proposal — **one deliberate change: Habits move from Phase 2 → Phase 1** (schema cost ≈ 2 tables + 200 LOC domain; daily-loop value is among the highest; the habit check on Today/dashboard is the retention engine), and **statistics ships as counters in Phase 1** (dashboard already computes them) with **charts in Phase 2**.

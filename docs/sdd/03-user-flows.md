@@ -1,5 +1,7 @@
 # Chunk 03 — User Flows, Feature Specification, Information Architecture
 
+> **As built:** deviations for this area are recorded in [16-implementation-notes.md](16-implementation-notes.md).
+
 ## 1. User Flows (spec §47)
 
 ### 1.1 First-time user (onboarding)
