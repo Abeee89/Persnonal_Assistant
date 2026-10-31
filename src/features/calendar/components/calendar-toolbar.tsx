@@ -81,13 +81,14 @@ export function CalendarToolbar({
             <Link
               key={kind}
               href={calendarHref({ ...base, kinds: nextKinds.length === 0 ? [...EVENT_KINDS] : nextKinds, anchor: state.anchor })}
-              aria-pressed={active}
+              aria-current={active ? "true" : undefined}
               className={cn(
                 "inline-flex h-7 items-center rounded-full border px-3",
                 active ? "border-primary/40 bg-accent text-foreground" : "border-border text-muted-foreground line-through",
               )}
             >
               {KIND_LABEL[kind]}
+              <span className="sr-only">{active ? " (shown)" : " (hidden)"}</span>
             </Link>
           );
         })}

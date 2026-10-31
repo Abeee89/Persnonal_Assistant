@@ -18,6 +18,10 @@ data/
 .env.*
 !.env.example
 
+# e2e artifacts
+test-results/
+playwright-report/
+
 # misc
 .DS_Store
 npm-debug.log*

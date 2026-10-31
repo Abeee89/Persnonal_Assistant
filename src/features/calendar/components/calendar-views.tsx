@@ -62,7 +62,7 @@ export function MonthGrid({
                   "mb-1 inline-flex size-6 items-center justify-center rounded-full tabular-nums hover:bg-accent",
                   isToday && "bg-primary text-primary-foreground hover:bg-primary",
                 )}
-                aria-label={`${day}, ${String(items.length)} items`}
+                aria-label={`${String(dayNumber(day))}, ${day}${items.length > 0 ? ` · ${String(items.length)} items` : ""}`}
               >
                 {dayNumber(day)}
               </Link>
